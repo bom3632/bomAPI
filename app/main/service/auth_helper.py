@@ -37,6 +37,7 @@ class Auth:
     def logout_user(data):
         if data:
             auth_token = data.split(" ")[1]
+            print("auth_token:", auth_token)
         else:
             auth_token = ''
         if auth_token:

@@ -20,8 +20,8 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     db = {
-        'user': 'myuser',
-        'password': 'mypassword
+        'user': 'bom3632',
+        'password': 'Cc270618!!',
         'host': '127.0.0.1',
         'port': '3306',
         'database': 'flask_test'
