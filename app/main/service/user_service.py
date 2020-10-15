@@ -41,6 +41,10 @@ def get_a_user(public_id):
     return User.query.filter_by(public_id=public_id).first()
 
 
+def get_a_user_with_email(email):
+    return User.query.filter_by(email=email).first()
+
+
 def save_changes(data):
     db.session.add(data)
     db.session.commit()

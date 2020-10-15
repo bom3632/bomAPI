@@ -4,7 +4,7 @@ from flask_jwt_extended import (
     JWTManager, jwt_required, jwt_optional, create_access_token, get_jwt_identity, get_jwt_claims)
 
 from ..util.dto import UserDto
-from ..service.user_service import save_new_user, get_all_users, get_a_user
+from ..service.user_service import save_new_user, get_all_users, get_a_user, get_a_user_with_email
 
 api = UserDto.api
 _user = UserDto.user
@@ -38,6 +38,21 @@ class User(Resource):
         """get a user given its identifier"""
         user = get_a_user(public_id)
         if not user:
-            api.abort(404)
+            api.abort(404, 'User not found.')
+        else:
+            return user
+
+
+@api.route('/email/<email>')
+@api.param('email', 'The User\'s email address')
+@api.response(404, 'User not found.')
+class User(Resource):
+    @api.doc('get a user with email')
+    @api.marshal_with(_user)
+    def get(self, email):
+        """get a user given its identifier"""
+        user = get_a_user_with_email(email)
+        if not user:
+            api.abort(404, 'User not found.')
         else:
             return user

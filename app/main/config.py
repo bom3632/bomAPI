@@ -51,4 +51,4 @@ config_by_name = dict(
     prod=ProductionConfig
 )
 
-key = Config.SECRET_KEY
+key = Config.SECRET_KEY         # cloud또는 3rd party의 KEY Vault 구축 필요

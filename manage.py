@@ -1,11 +1,13 @@
+# Flask Script at root directory
 import os
 import unittest
 
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
-from app import blueprint
 from app.main import create_app, db
+from app import blueprint
+
 
 app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')
 app.register_blueprint(blueprint)
@@ -21,7 +23,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def run():
-    app.run(host='0.0.0.0')
+    app.run()
 
 
 @manager.command

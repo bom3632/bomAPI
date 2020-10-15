@@ -1,3 +1,4 @@
+# data transfer object (DTO)
 from flask_restplus import Namespace, fields
 
 
