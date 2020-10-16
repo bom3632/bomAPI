@@ -84,7 +84,7 @@ class UserDetail(db.Model):
 
     # todo : team_id (foreign key) 추가
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    public_id = db.Column(db.String(100), db.ForeignKey('hd_user_base.public_id'))  # user ID
+    public_id = db.Column(db.String(100))  # user ID
     address = db.Column(db.String(256))
     phone_number = db.Column(db.String(32))
     memo = db.Column(db.String(512))
