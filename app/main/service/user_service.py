@@ -1,7 +1,10 @@
 import datetime
 
+from flask import jsonify
+from sqlalchemy import text
+
 from app.main import db
-from app.main.model.user import User
+from app.main.model.user import User, UserDetail
 
 
 # 사용자 추가
@@ -18,12 +21,17 @@ def save_new_user(data):
             reg_datetime=datetime.datetime.utcnow(),
             memo="",
         )
-        if data['level_cd'] == '99':    # super admin
+        if data['level_cd'] == '99':  # super admin
             new_user.is_admin = True
         else:
             new_user.is_admin = False
-
-        save_changes(new_user)
+        user_detail = UserDetail(
+            public_id=data['public_id'],
+            address=data['address'],
+            phone_number=data['phone_number'],
+            reg_datetime=datetime.datetime.utcnow(),
+        )
+        save_changes(new_user, user_detail)  # insert to DB
         return generate_token(new_user)
     else:
         response_object = {
@@ -34,7 +42,41 @@ def save_new_user(data):
 
 
 def get_all_users():
-    return User.query.all()
+    # return User.query.all()
+    users = db.engine.execute(text("""
+            select * from flask_test.hd_user_base
+            """)).fetchall()
+
+    return [{
+        'public_id': row['public_id'],
+        'user_role': row['user_role'],
+        'level_cd': row['level_cd'],
+        'email': row['email'],
+    } for row in users]
+
+
+def get_all_users_detail():
+    # return db.session.query(User).\
+    #     outerjoin(UserDetail, User.public_id == UserDetail.public_id).\
+    #     all()
+    # ORM , outer join이 잘 안된다.
+    users = db.engine.execute(text("""
+        select *
+            from flask_test.hd_user_base
+            left  join  flask_test.hd_user_detail
+            on hd_user_base.public_id = hd_user_detail.public_id
+            """)).fetchall()
+
+    return [{
+        'public_id': row['public_id'],
+        'username': row['username'],
+        'password': row['password_hash'],
+        'user_role': row['user_role'],
+        'level_cd': row['level_cd'],
+        'email': row['email'],
+        'address': row['address'],
+        'phone_number': row['phone_number'],
+    } for row in users]
 
 
 def get_a_user(public_id):
@@ -45,8 +87,9 @@ def get_a_user_with_email(email):
     return User.query.filter_by(email=email).first()
 
 
-def save_changes(data):
+def save_changes(data, detail):
     db.session.add(data)
+    db.session.add(detail)
     db.session.commit()
 
 

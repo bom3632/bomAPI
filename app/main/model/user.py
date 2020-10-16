@@ -11,7 +11,6 @@ class User(db.Model):
     """ User Model for storing user related details """
     __tablename__ = "hd_user_base"
 
-    # todo : team_id (foreign key) 추가
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     public_id = db.Column(db.String(100), unique=True)  # user ID
     email = db.Column(db.String(256), unique=True, nullable=False)
@@ -21,7 +20,7 @@ class User(db.Model):
     username = db.Column(db.String(128), unique=True)
     password_hash = db.Column(db.String(128))
     memo = db.Column(db.String(512))
-    reg_id = db.Column(db.String(512))  # todo : inspector가 등록시 해당ID 필요
+    reg_id = db.Column(db.String(512), default='system')  # todo : admin 등록시 해당ID 필요
     reg_datetime = db.Column(db.DateTime)
     modify_id = db.Column(db.String(512))
     modify_datetime = db.Column(db.DateTime)
@@ -78,3 +77,21 @@ class User(db.Model):
     def __repr__(self):
         return "<user '{}'="">".format(self.username)
 
+
+class UserDetail(db.Model):
+    """ User Model for storing user related details """
+    __tablename__ = "hd_user_detail"
+
+    # todo : team_id (foreign key) 추가
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    public_id = db.Column(db.String(100), db.ForeignKey('hd_user_base.public_id'))  # user ID
+    address = db.Column(db.String(256))
+    phone_number = db.Column(db.String(32))
+    memo = db.Column(db.String(512))
+    reg_id = db.Column(db.String(512), default='system')
+    reg_datetime = db.Column(db.DateTime)
+    modify_id = db.Column(db.String(512))
+    modify_datetime = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return "<user Detail '{}'="">".format(self.public_id)

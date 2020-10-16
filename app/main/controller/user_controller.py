@@ -4,7 +4,7 @@ from flask_jwt_extended import (
     JWTManager, jwt_required, jwt_optional, create_access_token, get_jwt_identity, get_jwt_claims)
 
 from ..util.dto import UserDto
-from ..service.user_service import save_new_user, get_all_users, get_a_user, get_a_user_with_email
+from ..service.user_service import save_new_user, get_all_users, get_a_user, get_a_user_with_email, get_all_users_detail
 
 api = UserDto.api
 _user = UserDto.user
@@ -17,7 +17,7 @@ class UserList(Resource):
     #@jwt_required
     def get(self):
         """List all registered users"""
-        return get_all_users()
+        return get_all_users_detail()
 
     @api.response(201, 'User successfully created.')
     @api.doc('create a new user')

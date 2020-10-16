@@ -36,7 +36,7 @@ class Auth:
     @staticmethod
     def logout_user(data):
         if data:
-            auth_token = data.split(" ")[1]
+            auth_token = data.split(" ")[1] # "Bearer <token>"
             print("auth_token:", auth_token)
         else:
             auth_token = ''
