@@ -12,5 +12,5 @@ python manage.py db migrate
 python manage.py db upgrade  
 
 
-//참고자료
+[참고자료]
 https://medium.com/free-code-camp/structuring-a-flask-restplus-web-service-for-production-builds-c2ec676de563
