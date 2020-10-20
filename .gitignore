@@ -1,4 +1,4 @@
 /virtualenvs/
 /.idea/
-
+/app/main/config.py
 

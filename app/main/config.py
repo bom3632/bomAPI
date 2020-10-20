@@ -1,6 +1,5 @@
 import os
 
-
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -19,6 +18,7 @@ class DevelopmentConfig(Config):
     # SQLALCHEMY_DATABASE_URI = 'mysql:///' + os.path.join(basedir, 'flask_boilerplate_main.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    # RDMBS config
     db = {
         'user': 'bom3632',
         'password': 'Cc270618!!',
@@ -27,6 +27,9 @@ class DevelopmentConfig(Config):
         'database': 'flask_test'
     }
     SQLALCHEMY_DATABASE_URI = f"mysql+mysqlconnector://{db['user']}:{db['password']}@{db['host']}:{db['port']}/{db['database']}?charset=utf8"
+
+    # MongoDB config
+    MONGO_URI = "mongodb://localhost:27017/hellodata"
 
 
 class TestingConfig(Config):
@@ -51,4 +54,4 @@ config_by_name = dict(
     prod=ProductionConfig
 )
 
-key = Config.SECRET_KEY         # cloud또는 3rd party의 KEY Vault 구축 필요
+key = Config.SECRET_KEY  # cloud또는 3rd party의 KEY Vault 구축 필요
