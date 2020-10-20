@@ -5,5 +5,8 @@ test for REST API flask
 python manage.py run
 
 [ DB 스키마 변경 ]
-python manage.py db migrate  # 변경내용 커밋생성
-python manage.py db upgrade  # DBMS적용
+ - 변경내용 커밋생성
+python manage.py db migrate  
+
+ - DBMS적용
+python manage.py db upgrade  
